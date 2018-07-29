@@ -68,11 +68,11 @@ function convertImages {
         RESIZE_ARG="${MAX_WIDTH}x${MAX_WIDTH}^"
       fi
 
-      convert "$IMAGE" \( -clone 0 -auto-orient -resize "$RESIZE_ARG" -gravity center -blur 0x9 -fill white -colorize 40% -crop "$MAX_WIDTH"x"$MAX_HEIGHT"+0+0 +repage \) \
+      convert "$IMAGE" \( -clone 0 -auto-orient -resize "${MAX_WIDTH}x${MAX_HEIGHT}^" -gravity center -blur 0x9 -fill white -colorize 40% -extent "$MAX_WIDTH"x"$MAX_HEIGHT" \) \
       \( -clone 0 -auto-orient -resize "$MAX_WIDTH"x"$MAX_HEIGHT"\> \) \
-        -delete 0 -auto-orient -gravity center -colorspace RGB -quality "$QUALITY" -compose over -composite "$OUTPUT"/"$FILE_NAME"
+        -delete 0 -auto-orient -strip -gravity center -colorspace RGB -quality "$QUALITY" -compose over -composite "$OUTPUT"/"$FILE_NAME"
     else
-      convert "$IMAGE" -resize "$MAX_WIDTH"x"$MAX_HEIGHT"\> -colorspace RGB -auto-orient -quality "$QUALITY" "$OUTPUT"/"$FILE_NAME"
+      convert "$IMAGE" -resize "$MAX_WIDTH"x"$MAX_HEIGHT"\> -colorspace RGB -auto-orient -strip -quality "$QUALITY" "$OUTPUT"/"$FILE_NAME"
     fi
     printf "\\n"
   done
@@ -91,4 +91,8 @@ makeOutputFolder
 convertImages
 printFileSizes
 printf "$(tput setaf 2)✓ Success: $(tput sgr0)%s.\\n" "Complete"
+
+# 312 × 234
+# 416 × 234
+# 234 × 234
 
