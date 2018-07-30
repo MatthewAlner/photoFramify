@@ -53,20 +53,7 @@ function convertImages {
     if [ "$ADD_BLUR_BACKGROUND" = true ] ; then
 
       aspect=$(convert "$IMAGE" -format "%[fx:w/h]" info:)
-      test1=$(convert xc: -format "%[fx:$aspect>($MAX_WIDTH/$MAX_HEIGHT)?1:0]" info:)
-      test2=$(convert xc: -format "%[fx:$aspect>=1?1:0]" info:)
       printf "\\twidth=%s; height=%s; aspect=%s;\\n" "$MAX_WIDTH" "$MAX_HEIGHT" "$aspect"
-
-      if [ "$test1" -eq 1 ]; then
-        printf "\\taspect larger than desired aspect (wider than tall)\\n"
-        RESIZE_ARG="${MAX_HEIGHT}x${MAX_HEIGHT}^"
-      elif [ "$test2" -eq 1 ]; then
-        printf "\\taspect less than desired aspect (wider than tall) but greater than or equal to 1\\n"
-        RESIZE_ARG="${MAX_WIDTH}x${MAX_WIDTH}"
-      else
-        printf "\\taspect less than 1 (taller than wide)\\n"
-        RESIZE_ARG="${MAX_WIDTH}x${MAX_WIDTH}^"
-      fi
 
       convert "$IMAGE" \( -clone 0 -auto-orient -resize "${MAX_WIDTH}x${MAX_HEIGHT}^" -gravity center -blur 0x9 -fill white -colorize 40% -extent "$MAX_WIDTH"x"$MAX_HEIGHT" \) \
       \( -clone 0 -auto-orient -resize "$MAX_WIDTH"x"$MAX_HEIGHT"\> \) \
@@ -91,8 +78,4 @@ makeOutputFolder
 convertImages
 printFileSizes
 printf "$(tput setaf 2)✓ Success: $(tput sgr0)%s.\\n" "Complete"
-
-# 312 × 234
-# 416 × 234
-# 234 × 234
 
