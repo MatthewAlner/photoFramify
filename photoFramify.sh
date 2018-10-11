@@ -13,21 +13,21 @@ RENAME_TO_MD5=true
 # Override defaults with any arguments passed in via flags
 while [ ! $# -eq 0 ]
 do
-	case "$1" in
-		--output-folder | -o)
+  case "$1" in
+    --output-folder | -o)
       NAME_OF_OUTPUT_FOLDER=$2;;
-		--max-height | -h)
-			MAX_HEIGHT=$2;;
+    --max-height | -h)
+      MAX_HEIGHT=$2;;
     --max-width | -w)
-			MAX_WIDTH=$2;;
+      MAX_WIDTH=$2;;
     --quality | -q)
-			QUALITY=$2;;
+      QUALITY=$2;;
     --blur | -b)
-			ADD_BLUR_BACKGROUND=$2;;
+      ADD_BLUR_BACKGROUND=$2;;
     --rename-to-md5 | -r)
-			RENAME_TO_MD5=$2;;  
-	esac
-	shift
+      RENAME_TO_MD5=$2;;  
+  esac
+  shift
 done
 
 # Determine path of output directory
