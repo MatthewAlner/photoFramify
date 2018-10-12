@@ -26,16 +26,21 @@ This will generate a `OUTPUT` folder with the processed images
 
 ## --verbose
 
-There is some config you can change in the script
+There are some available config options which can be provided as flags.
 
-| Setting               | Default | Type    | Description                                                  |
-|-----------------------|---------|---------|--------------------------------------------------------------|
-| NAME_OF_OUTPUT_FOLDER | OUTPUT  | string  | Name of Output folder                                        |
-| MAX_HEIGHT            | 1080    | integer | height of your picture frame (px)                            |
-| MAX_WIDTH             | 1920    | integer | width of your picture frame (px)                             |
-| QUALITY               | 92      | integer | jpeg quality 0-100                                           |
-| ADD_BLUR_BACKGROUND   | true    | boolean | should the blurred background be added                       |
-| RENAME_TO_MD5         | true    | boolean | should the output file be renamed to the md5 (prevent dupes) |
+| Setting               | Flag               | Default | Type    | Description                                                  |
+|-----------------------|--------------------|---------|---------|--------------------------------------------------------------|
+| NAME_OF_OUTPUT_FOLDER | -o --output-folder | OUTPUT  | string  | Name of Output folder                                        |
+| MAX_HEIGHT            | -h --max-height    | 1080    | integer | height of your picture frame (px)                            |
+| MAX_WIDTH             | -w --max-width     | 1920    | integer | width of your picture frame (px)                             |
+| QUALITY               | -q --quality       | 92      | integer | jpeg quality 0-100                                           |
+| ADD_BLUR_BACKGROUND   | -b --blur          | true    | boolean | should the blurred background be added                       |
+| RENAME_TO_MD5         | -r --rename-to-md5 | true    | boolean | should the output file be renamed to the md5 (prevent dupes) |
+
+Example:
+```
+photoFramify.sh -o generated -w 1920 -h 1080 -q 80 -b true -r true
+```
 
 Benefits
 
@@ -58,7 +63,6 @@ Benefits
 ### // TODO
 
 - Check this runs on linux (md5 command might need to be md5sum)
-- Make constants parameters to pass in
 - Parallelise?
 - Allow path to be passed in
 
