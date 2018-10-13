@@ -30,7 +30,7 @@ There are some available config options which can be provided as flags.
 
 | Setting               | Flag                    | Default | Type    | Description                                                   |
 |-----------------------|-------------------------|---------|---------|---------------------------------------------------------------|
-| INPUT_FOLDER_PATH     | -i --input-folder-path  | `pwd`   | string  | Location of input folder, defaulting to the current directory |
+| INPUT_FOLDER_PATH     | -i --input-folder-path  | `$pwd`  | string  | Location of input folder, defaulting to the current directory |
 | NAME_OF_OUTPUT_FOLDER | -o --output-folder-name | OUTPUT  | string  | Name of Output folder                                         |
 | MAX_HEIGHT            | -h --max-height         | 1080    | integer | height of your picture frame (px)                             |
 | MAX_WIDTH             | -w --max-width          | 1920    | integer | width of your picture frame (px)                              |
