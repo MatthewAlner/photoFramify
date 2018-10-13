@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-CURRENT_PATH=$(pwd)
-
 # Default parameters
+INPUT_FOLDER_PATH=$(pwd)
 NAME_OF_OUTPUT_FOLDER=OUTPUT
 MAX_HEIGHT=234 # The height of the pannel in the picture frame
 MAX_WIDTH=416 # The with in the pannel is 480 supposedly but was trimed when "optimal" and fuzzy when "Auto fit" so 16:9ed it (234/9)*16=416
@@ -14,7 +13,9 @@ RENAME_TO_MD5=true
 while [ ! $# -eq 0 ]
 do
   case "$1" in
-    --output-folder | -o)
+    --input-folder-path | -i)
+      INPUT_FOLDER_PATH=$2;;
+    --output-folder-name | -o)
       NAME_OF_OUTPUT_FOLDER=$2;;
     --max-height | -h)
       MAX_HEIGHT=$2;;
@@ -31,7 +32,7 @@ do
 done
 
 # Determine path of output directory
-OUTPUT="$CURRENT_PATH"/"$NAME_OF_OUTPUT_FOLDER"
+OUTPUT="$INPUT_FOLDER_PATH"/"$NAME_OF_OUTPUT_FOLDER"
 
 type_exists() {
     if [ "$(type -P "$1")" ]; then
@@ -55,8 +56,8 @@ function makeOutputFolder {
 
 function convertImages {
   ITER=0
-  FILE_COUNT=$(find "$CURRENT_PATH"/*.jpg -type f | wc -l | tr -d '[:space:]')
-  for IMAGE in "$CURRENT_PATH"/*.jpg; do
+  FILE_COUNT=$(find "$INPUT_FOLDER_PATH"/*.jpg -type f | wc -l | tr -d '[:space:]')
+  for IMAGE in "$INPUT_FOLDER_PATH"/*.jpg; do
     ((++ITER))
 
       BASE_NAME=$(basename "$IMAGE")
@@ -87,7 +88,7 @@ function convertImages {
 }
 
 function printFileSizes {
-  INPUT_TOTAL_FILE_SIZE=$(find "$CURRENT_PATH" -type f -name '*.jpg' -exec du -ch {} + | grep total$)
+  INPUT_TOTAL_FILE_SIZE=$(find "$INPUT_FOLDER_PATH" -type f -name '*.jpg' -exec du -ch {} + | grep total$)
   printf "$(tput setaf 6)┃ $(tput sgr0)$(tput setaf 7)%s...$(tput sgr0)\\n" "INPUT DIR SIZE: $INPUT_TOTAL_FILE_SIZE"
 
   OUTPUT_TOTAL_FILE_SIZE=$(du -hcs "$OUTPUT" | grep total$)
