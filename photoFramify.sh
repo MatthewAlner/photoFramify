@@ -2,14 +2,35 @@
 
 CURRENT_PATH=$(pwd)
 
-# Change these Parameters
+# Default parameters
 NAME_OF_OUTPUT_FOLDER=OUTPUT
-MAX_HEIGHT=234 #The height of the pannel in the picture frame
-MAX_WIDTH=416 #The with in the pannel is 480 supposedly but was trimed when "optimal" and fuzzy when "Auto fit" so 16:9ed it (234/9)*16=416
+MAX_HEIGHT=234 # The height of the pannel in the picture frame
+MAX_WIDTH=416 # The with in the pannel is 480 supposedly but was trimed when "optimal" and fuzzy when "Auto fit" so 16:9ed it (234/9)*16=416
 QUALITY=92
 ADD_BLUR_BACKGROUND=true
 RENAME_TO_MD5=true
 
+# Override defaults with any arguments passed in via flags
+while [ ! $# -eq 0 ]
+do
+  case "$1" in
+    --output-folder | -o)
+      NAME_OF_OUTPUT_FOLDER=$2;;
+    --max-height | -h)
+      MAX_HEIGHT=$2;;
+    --max-width | -w)
+      MAX_WIDTH=$2;;
+    --quality | -q)
+      QUALITY=$2;;
+    --blur | -b)
+      ADD_BLUR_BACKGROUND=$2;;
+    --rename-to-md5 | -r)
+      RENAME_TO_MD5=$2;;  
+  esac
+  shift
+done
+
+# Determine path of output directory
 OUTPUT="$CURRENT_PATH"/"$NAME_OF_OUTPUT_FOLDER"
 
 type_exists() {
